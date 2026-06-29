@@ -1,0 +1,1 @@
+// AOC 2015 day 1 solution
