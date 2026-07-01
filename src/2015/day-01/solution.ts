@@ -1,40 +1,36 @@
-import {readInput} from "../../utils/readInput.js";
+import { readInput } from "../../utils/readInput.js";
 
 const filePath = "src/2015/day-01/input.txt";
 const input = readInput(filePath);
 
-const result = calculateFinalFloor(input);
+const { part1, part2 } = solvePuzzle(input);
 
-console.log("Part 1:", result.part1);
-console.log("Part 2:", result.part2);
+console.log("Part 1:", part1);
+console.log("Part 2:", part2);
 
-
-function calculateFinalFloor(input: string): {part1: number, part2: number}
+function solvePuzzle(input: string): { part1: number, part2: number | undefined }
 {
     let currentFloor = 0;
-    let basementEntered = false;
-    let charPos = 1110;
+    let firstBasementPosition: number | undefined;
 
     for (let i = 0; i < input.length; i++)
     {
-        if (input.charAt(i) === "(")
+        const char = input.charAt(i);
+
+        if (char === "(")
         {
             currentFloor++;
         }
-        else if (input.charAt(i) === ")")
+        else if (char === ")")
         {
             currentFloor--;
         }
         
-        if (!basementEntered)
+        if (firstBasementPosition === undefined && currentFloor === -1)
         {
-            if (currentFloor === -1)
-            {
-                charPos = i + 1;
-                basementEntered = true;
-            }
+            firstBasementPosition = i + 1; // Puzzle requires 1-based position
         }
     }
 
-    return {part1: currentFloor, part2: charPos};
+    return { part1: currentFloor, part2: firstBasementPosition };
 }
