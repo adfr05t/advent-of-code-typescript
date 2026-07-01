@@ -4,7 +4,10 @@
 https://adventofcode.com/2015/day/1
 
 ## Part 1
-- 
+- Aim: find the correct floor
+- Begin at floor 0
+- `(` means go up one floor
+- `)` means go down one floor
 
 ## Part 2
 - 
