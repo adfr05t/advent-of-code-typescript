@@ -13,3 +13,5 @@ I will use the following format for solution files where appropriate:
 - read input
 - call to the solving function, logging the return
 - solving function(s)
+
+I will use the same solution file for both parts of each puzzle (unless that gets messy).

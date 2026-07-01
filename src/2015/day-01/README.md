@@ -10,7 +10,7 @@ https://adventofcode.com/2015/day/1
 - `)` means go down one floor
 
 ## Part 2
-- 
+- Aim: find the position of the character that first results in entering the basement (floor -1)
 
 ## Notes
 - 
