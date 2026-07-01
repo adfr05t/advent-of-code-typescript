@@ -1,0 +1,1 @@
+import "./2015/day-01/solution.js";

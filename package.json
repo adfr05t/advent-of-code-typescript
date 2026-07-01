@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "build": "tsc",
-    "start": "node dist/2015/day-01/solution.js"
+    "start": "node dist/index.js"
   },
   "devDependencies": {
     "@types/node": "^26.0.1",
