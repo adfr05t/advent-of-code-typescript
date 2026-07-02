@@ -1,35 +1,27 @@
 import { readInput } from "../../utils/readInput";
 
-class Box
-{
+type Box = {
     length: number;
     width: number;
     height: number;
-
-    constructor(length: number, width: number, height: number)
-    {
-        this.length = length;
-        this.width = width;
-        this.height = height;
-    }
 }
 
-const boxestoWrap: Box[] = [];
+const boxesToWrap: Box[] = [];
 let wrappingPaperTotal = 0;
 
 const filePath = "src/2015/day-02/input.txt"
 const input = readInput(filePath);
-const dimensionsOfEachBox = input.split(/\r?\n/);
+const boxDimensionsText = input.split(/\r?\n/);
 
-// Process each string into three numbers and use to create a box instance
-for (const dimensions of dimensionsOfEachBox)
+// Process each string into three numbers and use to create a box object
+for (const dimensions of boxDimensionsText)
 {
-    const rawDimensions = dimensions.split("x");
-    const box = new Box(parseInt(rawDimensions[0]), parseInt(rawDimensions[1]), parseInt(rawDimensions[2]));
-    boxestoWrap.push(box);
+    const [length, width, height] = dimensions.split("x").map(Number);
+    const box: Box = { length, width, height };
+    boxesToWrap.push(box);
 }
 
-for (const box of boxestoWrap)
+for (const box of boxesToWrap)
 {
     wrappingPaperTotal += calculateBoxSurfaceArea(box);
 }
