@@ -1,1 +1,1 @@
-import "./2015/day-01/solution.js";
+import "./2015/day-02/solution.js";
