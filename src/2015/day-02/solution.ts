@@ -6,36 +6,37 @@ type Box = {
     height: number;
 }
 
-const boxesToWrap: Box[] = [];
-let wrappingPaperTotal = 0;
-
 const filePath = "src/2015/day-02/input.txt"
 const input = readInput(filePath);
-const boxDimensionsText = input.split(/\r?\n/);
 
-// Process each string into three numbers and use to create a box object
-for (const dimensions of boxDimensionsText)
+const answer = solvePuzzle(input);
+console.log(answer);
+
+function solvePuzzle(input: string): number
 {
-    const [length, width, height] = dimensions.split("x").map(Number);
-    const box: Box = { length, width, height };
-    boxesToWrap.push(box);
+    let wrappingPaperTotal = 0;
+    const boxDimensionStrings = input.split(/\r?\n/);
+
+    for (const dimensions of boxDimensionStrings)
+    {
+        const [length, width, height] = dimensions.split("x").map(Number);
+        const box: Box = { length, width, height };
+
+        wrappingPaperTotal += calculateWrappingPaperNeeded(box);
+    }
+
+    return wrappingPaperTotal;
 }
 
-for (const box of boxesToWrap)
+function calculateWrappingPaperNeeded(box: Box): number
 {
-    wrappingPaperTotal += calculateBoxSurfaceArea(box);
-}
+    // Amount of paper required is surface area of box + area of the smallest side
+    const areaOfSide1 = box.length * box.width;
+    const areaOfSide2 = box.width * box.height;
+    const areaOfSide3 = box.height * box.length;
 
-// Answer
-console.log(wrappingPaperTotal);
-
-function calculateBoxSurfaceArea(box: Box): number
-{
-    // surface area = 2*l*w + 2*w*h + 2*h*l
-    const surfaceArea = (2 * (box.length * box.width)) + (2 * (box.width * box.height)) + (2 * (box.height * box.length));
-
-    // ...add the area of the smallest side (which will be l*w or w*h or h*l)
-    const smallestSide = Math.min(box.length * box.width, box.width * box.height, box.height * box.length);
+    const surfaceArea = 2 * (areaOfSide1 + areaOfSide2 + areaOfSide3);
+    const smallestSide = Math.min(areaOfSide1, areaOfSide2, areaOfSide3);
 
     return surfaceArea + smallestSide;
 }
