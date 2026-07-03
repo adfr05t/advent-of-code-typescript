@@ -5,8 +5,8 @@ const input = readInput(filePath);
 
 const { part1, part2 } = solvePuzzle(input);
 
-console.log("Part 1:", part1);
-console.log("Part 2:", part2);
+console.log("Part 1 answer:", part1);
+console.log("Part 2 answer:", part2);
 
 function solvePuzzle(input: string): { part1: number, part2: number | undefined }
 {
