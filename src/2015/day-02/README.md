@@ -22,4 +22,16 @@ Method:
     - Bow: volume of box (multiply the three dimensions). Eg. 2x3x4 requires 2 * 3 * 4   
 
 ## Notes
+- Structure:
+    - imports
+    - declare Box type alias
+    - read input
+    - call solvePuzzle()
+    - log answers
 
+    - solvePuzzle():
+        - split input into box strings, and for each:
+            - parse each box
+            - add wrapping paper total
+            - add ribbon total
+        - return both answers
