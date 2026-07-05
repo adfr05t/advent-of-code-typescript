@@ -9,12 +9,12 @@ https://adventofcode.com/2015/day/3
 
 
 ## Part 2
-- Aim: 
+- Aim: as part 1, but with two Santas, each taking alternate characters from the input.
 
 ## Notes
 
 - Initial difficulties (Part 1):
-    - hiccup due to not realising that when pushng OBJECTS to an array, the result is a reference to the original object in the array. Further changes made to the object are also reflected in the array (because it is a reference-to, not a copy).
+    - hiccup due to not realising that when pushng OBJECTS to an array, the result is a reference to the original object. Further changes made to the object are also reflected in the array (because it is a reference-to, not a copy).
 
     - use 
         - myArray.push({ ...myObject });
