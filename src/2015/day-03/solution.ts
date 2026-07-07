@@ -19,8 +19,8 @@ function solvePuzzle(input: string): { part1: number, part2: number}
     const inputForSingleSanta = [input];
     const inputForTwoSantas = splitDeliveryRoute(input);
 
-    const part1Answer = uniqueLocationsVisited(inputForSingleSanta);
-    const part2Answer = uniqueLocationsVisited(inputForTwoSantas);
+    const part1Answer = countUniqueLocationsVisited(inputForSingleSanta);
+    const part2Answer = countUniqueLocationsVisited(inputForTwoSantas);
 
     return {
         part1: part1Answer,
@@ -45,62 +45,55 @@ function splitDeliveryRoute(input: string): string[]
         }
     }
 
-    // Convert arrays back into single strings with no seperators
-    return [santa1DeliveryRoute.join(""), santa2DeliveryRoute.join("")]
+    // Convert arrays back into single strings with no separators
+    return [santa1DeliveryRoute.join(""), santa2DeliveryRoute.join("")];
 }
 
-function uniqueLocationsVisited(deliveryRoutes: string[]): number
+function countUniqueLocationsVisited(deliveryRoutes: string[]): number
 {
-    const currentLocation: Location = {
-        x: 0,
-        y: 0
-    };
-
-    const locationsVisited: Location[] = [{ ...currentLocation }];
-    let uniqueLocationsVisited = 1; // starting location counts as 1
+    const locationsVisited: Location[] = [{ x: 0, y: 0 }];
 
     for (const route of deliveryRoutes)
     {
-        for (let j = 0; j < route.length; j++)
+        const currentLocation: Location = {
+            x: 0,
+            y: 0
+        };
+
+        for (const direction of route)
         {
-            // Ensure a new route starts at (0, 0)
-            if (j ===0)
-            {
-                currentLocation.x = 0;
-                currentLocation.y = 0;
-            }
-
-            const direction = route.charAt(j);
+            move(currentLocation, direction);
             
-            switch (direction) 
-            {
-                case "<":
-                    currentLocation.x--;
-                    break;
-                
-                case ">":
-                    currentLocation.x++;
-                    break;
-                
-                case "^":
-                    currentLocation.y++;
-                    break;
-                
-                case "v":
-                    currentLocation.y--;
-                    break;
-            }
-
             if (isNewLocation(currentLocation, locationsVisited))
             {
-                uniqueLocationsVisited++;
+                locationsVisited.push({ ...currentLocation });
             }
-
-            locationsVisited.push({ ...currentLocation });
         }
     }
- 
-    return uniqueLocationsVisited;
+
+    return locationsVisited.length;
+}
+
+function move(currentLocation: Location, direction: string)
+{
+        switch (direction) 
+        {
+            case "<":
+                currentLocation.x--;
+                break;
+            
+            case ">":
+                currentLocation.x++;
+                break;
+            
+            case "^":
+                currentLocation.y++;
+                break;
+            
+            case "v":
+                currentLocation.y--;
+                break;
+        }
 }
 
 function isNewLocation(newLocation: Location, locationsVisited: Location[]): boolean 
