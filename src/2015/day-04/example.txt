@@ -1,0 +1,7 @@
+Part 1 test cases:
+
+abcdef 
+    - answer 609043
+
+ pqrstuv 
+    - answer 1048970
