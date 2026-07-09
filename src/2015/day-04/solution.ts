@@ -11,13 +11,11 @@ console.log("Part 2 answer:", part2);
 
 function solvePuzzle(input: string): { part1: number, part2: number}
 {   
-    let zerosTarget = 5;
-    let numberToAppend = 1;
+    const zerosTarget = { part1: 5, part2: 6 };
+    const firstNumberToAppend = 1;
 
-    const part1Solution = findLowestMatchingNumber(input, zerosTarget, numberToAppend);
-    zerosTarget++;
-    numberToAppend = part1Solution;
-    const part2Solution = findLowestMatchingNumber(input, zerosTarget, numberToAppend);
+    const part1Solution = findLowestMatchingNumber(input, zerosTarget.part1, firstNumberToAppend);
+    const part2Solution = findLowestMatchingNumber(input, zerosTarget.part2, part1Solution);
 
     return { part1: part1Solution, part2: part2Solution };
 }
