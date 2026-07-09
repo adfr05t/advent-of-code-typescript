@@ -7,19 +7,17 @@ const input = readInput(filePath);
 const { part1, part2 } = solvePuzzle(input);
 
 console.log("Part 1 answer:", part1);
-// console.log("Part 2 answer:", part2);
+console.log("Part 2 answer:", part2);
 
 function solvePuzzle(input: string): { part1: number, part2: number}
-{
-    for (let i = 1; ; i++)
-    {
-        const appendedInput = input.concat(i.toString());
+{   
+    const zerosTarget = { part1: 5, part2: 6 };
+    const firstNumberToAppend = 1;
 
-        if (countInitialZeros(getHash(appendedInput)) >= 5)
-        {
-            return { part1: i, part2: 0};
-        }
-    }
+    const part1Solution = findLowestMatchingNumber(input, zerosTarget.part1, firstNumberToAppend);
+    const part2Solution = findLowestMatchingNumber(input, zerosTarget.part2, part1Solution);
+
+    return { part1: part1Solution, part2: part2Solution };
 }
 
 function getHash(input: string): string
@@ -28,7 +26,25 @@ function getHash(input: string): string
     hashBuilder.update(input);
     const hash = hashBuilder.digest("hex");
 
-    return hash;;
+    return hash;
+}
+
+function findLowestMatchingNumber(input: string, zerosTarget: number, numberToAppend: number): number
+{
+    for (numberToAppend; ; numberToAppend++)
+    {
+        const appendedInput = appendNumberToInput(input, numberToAppend)
+
+        if (countInitialZeros(getHash(appendedInput)) >= zerosTarget)
+        {   
+            return numberToAppend;
+        }
+    }
+}
+
+function appendNumberToInput(input: string, numberToAppend: number): string
+{
+    return input.concat(numberToAppend.toString());
 }
 
 function countInitialZeros(hash: string): number
