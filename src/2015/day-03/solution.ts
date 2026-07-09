@@ -45,13 +45,13 @@ function splitDeliveryRoute(input: string): string[]
         }
     }
 
-    // Convert arrays back into single strings with no separators
+    // Convert arrays back into single strings with no separator
     return [santa1DeliveryRoute.join(""), santa2DeliveryRoute.join("")];
 }
 
 function countUniqueLocationsVisited(deliveryRoutes: string[]): number
 {
-    const locationsVisited: Location[] = [{ x: 0, y: 0 }];
+    const locationsVisited = new Set <string>();
 
     for (const route of deliveryRoutes)
     {
@@ -63,15 +63,11 @@ function countUniqueLocationsVisited(deliveryRoutes: string[]): number
         for (const direction of route)
         {
             move(currentLocation, direction);
-            
-            if (isNewLocation(currentLocation, locationsVisited))
-            {
-                locationsVisited.push({ ...currentLocation });
-            }
+            locationsVisited.add(getLocationKey(currentLocation));
         }
     }
 
-    return locationsVisited.length;
+    return locationsVisited.size;
 }
 
 function move(currentLocation: Location, direction: string)
@@ -96,15 +92,7 @@ function move(currentLocation: Location, direction: string)
         }
 }
 
-function isNewLocation(newLocation: Location, locationsVisited: Location[]): boolean 
+function getLocationKey(location: Location): string
 {
-    for (const location of locationsVisited)
-    {
-        if (newLocation.x === location.x && newLocation.y === location.y)
-        {
-            return false;
-        }
-    }
-
-    return true;
+    return`${location.x},${location.y}`;
 }
