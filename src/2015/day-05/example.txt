@@ -1,0 +1,11 @@
+test cases part 1:
+
+ugknbfddgicrmopn
+aaa
+    - answer: nice
+
+
+jchzalrnumimnmhp
+haegwjzuvuyypxyu
+dvszwmarrgswjxmb
+    - answer: naughty
