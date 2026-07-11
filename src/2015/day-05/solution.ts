@@ -11,16 +11,16 @@ console.log("Part 2 answer:", part2);
 function solvePuzzle(input: string): { part1: number, part2: number }
 {
     const stringsToEvaluate = input.split(/\r?\n/);
-    let niceStringsCount = { part1: 0, part2: 0 }
+    const niceStringsCount = { part1: 0, part2: 0 };
 
     for (const candidate of stringsToEvaluate)
     {
-        if (!containsNaughtyStrings(candidate) && containsDoubleLetter(candidate, 1) && containsAtLeastThreeVowels(candidate))
+        if (!containsNaughtyStrings(candidate) && containsRepeatedLetter(candidate, 1) && containsAtLeastThreeVowels(candidate))
         {
             niceStringsCount.part1++;
         }
 
-        if (doesAnyLetterPairRepeat(candidate) && containsDoubleLetter(candidate, 2))
+        if (doesAnyLetterPairRepeat(candidate) && containsRepeatedLetter(candidate, 2))
         {
             niceStringsCount.part2++;
         }
@@ -44,7 +44,7 @@ function containsNaughtyStrings(candidate: string): boolean
     return false;
 }
 
-function containsDoubleLetter(candidate: string, spacing: number): boolean
+function containsRepeatedLetter(candidate: string, spacing: number): boolean
 {
     for (let i = 0; i < candidate.length - 1; i++)
     {
