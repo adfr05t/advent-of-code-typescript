@@ -11,17 +11,17 @@ console.log("Part 2 answer:", part2);
 function solvePuzzle(input: string): { part1: number, part2: number }
 {
     const stringsToEvaluate = input.split(/\r?\n/);
-    let vowelCount = 0;
+    let niceStringsCount = 0;
 
     for (const candidate of stringsToEvaluate)
     {
         if (!containsNaughtyStrings(candidate) && containsDoubleLetter(candidate) && containsAtLeastThreeVowels(candidate))
         {
-            vowelCount++;
+            niceStringsCount++;
         }
     }
 
-    return { part1: vowelCount, part2: 0 };
+    return { part1: niceStringsCount, part2: 0 };
 }
 
 function containsNaughtyStrings(candidate: string): boolean
@@ -55,15 +55,15 @@ function containsDoubleLetter(candidate: string): boolean
 function containsAtLeastThreeVowels(candidate: string): boolean
 {
     const vowels = [ "a", "e", "i", "o", "u" ];
-    let numberOfVowels = 0;
+    let vowelCount = 0;
 
     for (const character of candidate)
     {
         if (vowels.includes(character))
         {
-            numberOfVowels++;
+            vowelCount++;
 
-            if (numberOfVowels >= 3)
+            if (vowelCount >= 3)
             {
                 return true;
             }
