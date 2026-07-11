@@ -1,11 +1,21 @@
-test cases part 1:
+Part 1 test cases:
 
 ugknbfddgicrmopn
 aaa
     - answer: nice
 
-
 jchzalrnumimnmhp
 haegwjzuvuyypxyu
 dvszwmarrgswjxmb
+    - answer: naughty
+
+
+Part 2 test cases:
+
+qjhvhtzxzqqjkmpb
+xxyxx
+    - answer: nice
+
+uurcxstgmygtbstg
+ieodomkazucvgmuy
     - answer: naughty

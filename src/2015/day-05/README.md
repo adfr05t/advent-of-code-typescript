@@ -12,6 +12,12 @@ https://adventofcode.com/2015/day/5
             - Does not contain: 'ab', 'cd', 'pq', or 'xy'
 
 ## Part 2
+- Same aim but new rules replace part 1 rules:
+    - Nice strings contain:
+        - a pair of any two letters that appear twice in the string.
+            - eg: xyxy, aafsgeaa, rwgfrw (NOT aaa - no overlaps)
+        - contains at least one letter which repeats with one letter inbetween
+            - eg: xyx, efe, aaa (inbetween letter CAN be the same)
 
 
 ## Notes
