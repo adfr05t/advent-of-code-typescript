@@ -46,7 +46,7 @@ function containsNaughtyStrings(candidate: string): boolean
 
 function containsRepeatedLetter(candidate: string, spacing: number): boolean
 {
-    for (let i = 0; i < candidate.length - 1; i++)
+    for (let i = 0; i < candidate.length - spacing; i++)
     {
         if (candidate.charAt(i) === candidate.charAt(i + spacing))
         {
