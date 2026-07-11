@@ -11,17 +11,22 @@ console.log("Part 2 answer:", part2);
 function solvePuzzle(input: string): { part1: number, part2: number }
 {
     const stringsToEvaluate = input.split(/\r?\n/);
-    let niceStringsCount = 0;
+    let niceStringsCount = { part1: 0, part2: 0 }
 
     for (const candidate of stringsToEvaluate)
     {
-        if (!containsNaughtyStrings(candidate) && containsDoubleLetter(candidate) && containsAtLeastThreeVowels(candidate))
+        if (!containsNaughtyStrings(candidate) && containsDoubleLetter(candidate, 1) && containsAtLeastThreeVowels(candidate))
         {
-            niceStringsCount++;
+            niceStringsCount.part1++;
+        }
+
+        if (doesAnyLetterPairRepeat(candidate) && containsDoubleLetter(candidate, 2))
+        {
+            niceStringsCount.part2++;
         }
     }
 
-    return { part1: niceStringsCount, part2: 0 };
+    return { part1: niceStringsCount.part1, part2: niceStringsCount.part2 };
 }
 
 function containsNaughtyStrings(candidate: string): boolean
@@ -39,11 +44,11 @@ function containsNaughtyStrings(candidate: string): boolean
     return false;
 }
 
-function containsDoubleLetter(candidate: string): boolean
+function containsDoubleLetter(candidate: string, spacing: number): boolean
 {
     for (let i = 0; i < candidate.length - 1; i++)
     {
-        if (candidate.charAt(i) === candidate.charAt(i + 1))
+        if (candidate.charAt(i) === candidate.charAt(i + spacing))
         {
             return true;
         }
@@ -69,6 +74,22 @@ function containsAtLeastThreeVowels(candidate: string): boolean
             }
         }
     }
+
+    return false;
+}
+
+function doesAnyLetterPairRepeat(candidate: string): boolean
+{
+        for (let i = 0; i <= candidate.length - 4; i++)
+        {
+            const letterPair = candidate.charAt(i).concat(candidate.charAt(i + 1));
+            const remainderOfString = candidate.substring(i + 2);
+
+            if (remainderOfString.includes(letterPair))
+            {
+                return true;
+            }
+        }
 
     return false;
 }
