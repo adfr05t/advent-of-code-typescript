@@ -11,17 +11,22 @@ console.log("Part 2 answer:", part2);
 function solvePuzzle(input: string): { part1: number, part2: number }
 {
     const stringsToEvaluate = input.split(/\r?\n/);
-    let vowelCount = 0;
+    const niceStringsCount = { part1: 0, part2: 0 };
 
     for (const candidate of stringsToEvaluate)
     {
-        if (!containsNaughtyStrings(candidate) && containsDoubleLetter(candidate) && containsAtLeastThreeVowels(candidate))
+        if (!containsNaughtyStrings(candidate) && containsRepeatedLetter(candidate, 1) && containsAtLeastThreeVowels(candidate))
         {
-            vowelCount++;
+            niceStringsCount.part1++;
+        }
+
+        if (doesAnyLetterPairRepeat(candidate) && containsRepeatedLetter(candidate, 2))
+        {
+            niceStringsCount.part2++;
         }
     }
 
-    return { part1: vowelCount, part2: 0 };
+    return { part1: niceStringsCount.part1, part2: niceStringsCount.part2 };
 }
 
 function containsNaughtyStrings(candidate: string): boolean
@@ -39,11 +44,11 @@ function containsNaughtyStrings(candidate: string): boolean
     return false;
 }
 
-function containsDoubleLetter(candidate: string): boolean
+function containsRepeatedLetter(candidate: string, spacing: number): boolean
 {
-    for (let i = 0; i < candidate.length - 1; i++)
+    for (let i = 0; i < candidate.length - spacing; i++)
     {
-        if (candidate.charAt(i) === candidate.charAt(i + 1))
+        if (candidate.charAt(i) === candidate.charAt(i + spacing))
         {
             return true;
         }
@@ -55,20 +60,36 @@ function containsDoubleLetter(candidate: string): boolean
 function containsAtLeastThreeVowels(candidate: string): boolean
 {
     const vowels = [ "a", "e", "i", "o", "u" ];
-    let numberOfVowels = 0;
+    let vowelCount = 0;
 
     for (const character of candidate)
     {
         if (vowels.includes(character))
         {
-            numberOfVowels++;
+            vowelCount++;
 
-            if (numberOfVowels >= 3)
+            if (vowelCount >= 3)
             {
                 return true;
             }
         }
     }
+
+    return false;
+}
+
+function doesAnyLetterPairRepeat(candidate: string): boolean
+{
+        for (let i = 0; i <= candidate.length - 4; i++)
+        {
+            const letterPair = candidate.charAt(i).concat(candidate.charAt(i + 1));
+            const remainderOfString = candidate.substring(i + 2);
+
+            if (remainderOfString.includes(letterPair))
+            {
+                return true;
+            }
+        }
 
     return false;
 }
