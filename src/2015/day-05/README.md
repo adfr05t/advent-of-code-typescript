@@ -14,10 +14,15 @@ https://adventofcode.com/2015/day/5
 ## Part 2
 - Same aim but new rules replace part 1 rules:
     - Nice strings contain:
-        - a pair of any two letters that appear twice in the string.
+        -1. a pair of any two letters that appear twice in the string.
             - eg: xyxy, aafsgeaa, rwgfrw (NOT aaa - no overlaps)
-        - contains at least one letter which repeats with one letter inbetween
+        -2. contains at least one letter which repeats with one letter inbetween
             - eg: xyx, efe, aaa (inbetween letter CAN be the same)
 
 
 ## Notes
+
+- Part 2 Functions
+    - 1. check for consecutive matching letters
+    - ... and if found, search rest of the string for them
+    - 2. compare each character to character 2 places ahead 
