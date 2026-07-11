@@ -23,6 +23,5 @@ https://adventofcode.com/2015/day/5
 ## Notes
 
 - Part 2 Functions
-    - 1. check for consecutive matching letters
-    - ... and if found, search rest of the string for them
-    - 2. compare each character to character 2 places ahead 
+    - 1. check each pair of letters to see if they occur again in the remainder of the string
+    - 2. compare each character to character 2 places ahead (can re-use checkRepeatedLetters by adding a spacing var)
