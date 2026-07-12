@@ -1,0 +1,16 @@
+Part 1 test cases:
+
+turn on 0,0 through 999,999
+
+    - result: 1,000,000 lights on
+
+turn on 0,0 through 999,999
+toggle 0,0 through 999,0
+
+    - result: 999,000 lights on
+
+turn on 0,0 through 999,999
+toggle 0,0 through 999,0  
+turn off 499,499 through 500,500
+
+    - result: 998,996 lights on
