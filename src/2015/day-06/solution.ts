@@ -2,6 +2,7 @@ import { readInput } from "../../utils/readInput.js";
 
 type Light = {
     isOn: boolean;
+    brightness: number;
 };
 
 type GridCoordinates = {
@@ -133,7 +134,7 @@ function createLightGrid(size: number): Record<string, Light>
     {
         for (let y = 0; y < size; y++)
         {
-            lightGrid[x + "," + y] = { isOn: false };
+            lightGrid[x + "," + y] = { isOn: false, brightness: 0 };
         }
     }
 
