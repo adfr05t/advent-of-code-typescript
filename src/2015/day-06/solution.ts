@@ -40,50 +40,37 @@ function solvePuzzle(input: string): number
 
 function adjustLights(coordinates: GridCoordinates, actionType: Action, lightGrid: Record<string, Light>)
 {
-    // 1. find span of lights on which to perform action
+    // Find span of lights on which to perform action
     const lightsToChange = affectedLights(coordinates.from, coordinates.to);
-    // 2. apply the action
+
     if (actionType === Action.TurnOn)
     {
-        for (const lightPosition in lightsToChange)
+        for (const lightPosition of lightsToChange)
         {
-            {
-                const light = lightGrid[lightPosition];
-              //  console.log(lightGrid);
-                console.log(lightPosition);
-
-                console.log(light);
-
-               // light.isOn = true;
-            }
+            lightGrid[lightPosition].isOn = true;
         }
     }
-    if (actionType === Action.TurnOff)
+    else if (actionType === Action.TurnOff)
     {
-        for (const lightPosition in lightsToChange)
+        for (const lightPosition of lightsToChange)
         {
-            {
-                const light = lightGrid[lightPosition];
-                light.isOn = false;
-            }
+            lightGrid[lightPosition].isOn = false;
         }
     }
-    if (actionType === Action.Toggle)
+    else if (actionType === Action.Toggle)
     {
-        for (const lightPosition in lightsToChange)
+        for (const lightPosition of lightsToChange)
         {
-            {
-                const light = lightGrid[lightPosition];
-                light.isOn = (light.isOn) ? false : true;
-            }
+            const light = lightGrid[lightPosition];
+            light.isOn = (light.isOn) ? false : true;
         }
     }
 }
 
 function affectedLights(from: string, to: string): string[]
 {
-        const fromCoordinates = from.split(",")
-        const toCoordinates = to.split(",")
+        const fromCoordinates = from.split(",");
+        const toCoordinates = to.split(",");
 
         const start = { x: Number(fromCoordinates[0]), y: Number(fromCoordinates[1]) };
         const end = { x: Number(toCoordinates[0]), y: Number(toCoordinates[1]) };
@@ -92,9 +79,7 @@ function affectedLights(from: string, to: string): string[]
     
         for (let y = start.y; y <= end.y; y++) 
         {
-            const xLimit = (y === end.y) ? end.x : 3; 
-
-            for (let x = start.x; x <= xLimit; x++)
+            for (let x = start.x; x <= end.x; x++)
             {
                 const lightLocationKey = `${x},${y}`;
                 lightsInSelection.push(lightLocationKey);
@@ -136,7 +121,8 @@ function startIndexOfCoordinates(actionType: Action): number
     {
         return 9;
     }
-        return 7;
+    
+    return 7;
 }
 
 function createLightGrid(size: number): Record<string, Light>
@@ -147,7 +133,7 @@ function createLightGrid(size: number): Record<string, Light>
     {
         for (let y = 0; y < size; y++)
         {
-            lightGrid[x + "," + y] = { isOn: false }
+            lightGrid[x + "," + y] = { isOn: false };
         }
     }
 
@@ -162,7 +148,7 @@ function lightsTurnedOnCount(lightGrid: Record<string, Light>): number
     {
         if (light.isOn)
         {
-            lightsOnCount++
+            lightsOnCount++;
         }
     }
     
