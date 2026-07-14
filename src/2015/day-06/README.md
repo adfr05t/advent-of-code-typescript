@@ -12,9 +12,11 @@ https://adventofcode.com/2015/day/6
     - eg. 'turn on 0,0 through 2,2' turns on 9 lights total (a 3x3 square)
 
 ## Part 2
-
-
+- Aim: calculate the total brightness of all lights
+    - on: increment brightnes by 1
+    - off: decrement brightness by 1 (but minimum value of 0)
+    - toggle: increment brightness by 2
 
 ## Notes
-
+- The main problem with my current solution is the large arrays of keys created by affectedLights(). I would like to go back and rectify this in the future. I can use numbers for coordinates (rather than use string coordinates as keys) and combine the logic of affectedLights() and adjustLights() into a single method to avoid the array creation altogether.
     
