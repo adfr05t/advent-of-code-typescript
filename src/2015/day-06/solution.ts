@@ -1,4 +1,3 @@
-import { brotliCompress } from "node:zlib";
 import { readInput } from "../../utils/readInput.js";
 
 type Light = {
