@@ -1,3 +1,4 @@
+import { brotliCompress } from "node:zlib";
 import { readInput } from "../../utils/readInput.js";
 
 type Light = {
@@ -20,10 +21,12 @@ enum Action
 const filePath = "src/2015/day-06/input.txt";
 const input = readInput(filePath);
 
-const lightsOnCount = solvePuzzle(input);
-console.log("Part 1 answer:", lightsOnCount);
+const solution = solvePuzzle(input);
+console.log("Part 1 answer:", solution.part1);
+console.log("Part 2 answer:", solution.part2);
 
-function solvePuzzle(input: string): number
+
+function solvePuzzle(input: string): { part1: number, part2: number }
 {
     const lightGrid = createLightGrid(1000);
     const instructionStrings = input.split(/\r?\n/);
@@ -36,7 +39,7 @@ function solvePuzzle(input: string): number
         adjustLights(coordinates, actionType, lightGrid);
     } 
 
-    return lightsTurnedOnCount(lightGrid);
+    return { part1: lightsTurnedOnCount(lightGrid), part2: brightnessCount(lightGrid) };
 }
 
 function adjustLights(coordinates: GridCoordinates, actionType: Action, lightGrid: Record<string, Light>)
@@ -48,14 +51,22 @@ function adjustLights(coordinates: GridCoordinates, actionType: Action, lightGri
     {
         for (const lightPosition of lightsToChange)
         {
-            lightGrid[lightPosition].isOn = true;
+            const light = lightGrid[lightPosition];
+            light.isOn = true;
+            light.brightness++;
         }
     }
     else if (actionType === Action.TurnOff)
     {
         for (const lightPosition of lightsToChange)
         {
-            lightGrid[lightPosition].isOn = false;
+            const light = lightGrid[lightPosition];
+            light.isOn = false;
+
+            if (light.brightness > 0)
+            {
+                light.brightness--;
+            }
         }
     }
     else if (actionType === Action.Toggle)
@@ -64,6 +75,7 @@ function adjustLights(coordinates: GridCoordinates, actionType: Action, lightGri
         {
             const light = lightGrid[lightPosition];
             light.isOn = (light.isOn) ? false : true;
+            light.brightness += 2;
         }
     }
 }
@@ -154,4 +166,16 @@ function lightsTurnedOnCount(lightGrid: Record<string, Light>): number
     }
     
     return lightsOnCount;
+}
+
+function brightnessCount(lightGrid: Record<string, Light>): number
+{
+    let totalBrightness = 0;
+
+    for (const light of Object.values(lightGrid))
+    {
+        totalBrightness += light.brightness;
+    }
+    
+    return totalBrightness; 
 }
