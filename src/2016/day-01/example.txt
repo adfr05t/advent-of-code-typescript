@@ -1,0 +1,10 @@
+Test Cases Part 1:
+
+R2, L3
+    - leaves you 5 blocks away from starting position (2 blocks East and 3 blocks North)
+
+R2, R2, R2 
+    - 2 blocks
+
+R5, L5, R5, R3
+    - 12 blocks
