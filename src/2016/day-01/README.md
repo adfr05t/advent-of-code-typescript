@@ -15,6 +15,8 @@ https://adventofcode.com/2016/day/1
         - west: x -= distance
         
 ## Part 2
+- Aim: determine the Manhattan distance of the first location visited twice. 
+    - NB: this includes every location passed through - not only the destination after each instruction (eg. R5 means all 5 of those locations passed through must be considered visited).
 
 ## Notes
 
