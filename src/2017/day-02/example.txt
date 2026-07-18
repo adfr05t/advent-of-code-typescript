@@ -1,0 +1,6 @@
+Part 1 test case:
+
+5 9 2 8
+9 4 7 3
+3 8 6 5
+    - answer: 9
