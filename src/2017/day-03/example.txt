@@ -1,0 +1,7 @@
+Part 1 test cases:
+
+1       - answer 0
+12      - answer 3
+23      - answer 2 
+1024    - answer 31
+    
