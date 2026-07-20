@@ -1,10 +1,6 @@
 import { dir } from "node:console";
 import { readInput } from "../../utils/readInput.js";
-
-type Location = {
-    x: number;
-    y: number;
-};
+import type { Location } from "../../utils/coordinates.js";
 
 const filePath = "src/2015/day-03/input.txt";
 const input = readInput(filePath);

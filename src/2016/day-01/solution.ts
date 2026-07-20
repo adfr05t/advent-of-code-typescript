@@ -1,9 +1,5 @@
 import { readInput } from "../../utils/readInput.js";
-
-type Location = {
-    x:number;
-    y: number;
-};
+import { type Location, calculateManhattanDistance} from "../../utils/coordinates.js";
 
 type Direction = {
     rotationDirection: RotationDirection,
@@ -97,10 +93,4 @@ function moveToNewLocation(currentBearing: Bearing, currentLocation: Location, d
 function getDirectionStrings(input: string)
 {
     return input.split(", ");
-}
-
-function calculateManhattanDistance(destination: Location): number
-{
-    // Calculate from origin (0,0)
-    return Math.abs(0 - destination.x) + Math.abs(0 - destination.y);
 }
