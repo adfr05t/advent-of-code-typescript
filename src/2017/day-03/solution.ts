@@ -1,5 +1,5 @@
 import { readInput } from "../../utils/readInput.js";
-import type { Location } from "../../utils/coordinates.js";
+import  { type Location, calculateManhattanDistance } from "../../utils/coordinates.js";
 
 enum Direction
 {
@@ -20,52 +20,60 @@ function solvePuzzle(input: number): { part1: number, part2: number }
 {
     let stepsToMove = 1;
     let currentDirection = Direction.Right;
-    let currentLocation: Location = { 
-        x: 0, 
-        y: 0 
+    let currentLocation: Location = {
+        x: 0,
+        y: 0
     };
 
-    for (let locationNumber = 1; ; locationNumber++)
+    let locationNumber = 1;
+
+    while (locationNumber < input)
     {
-        for (let i = 0; i < 2; i++)
+        for (let i = 0; i < 2 && locationNumber < input; i++)
         {
-            move(stepsToMove, currentDirection, currentLocation);
+            for (let j = 0; j < stepsToMove && locationNumber < input; j++)
+            {
+                currentLocation = move(currentDirection, currentLocation);
+                locationNumber++;
+            }
+
             currentDirection = rotateToLeft(currentDirection);
         }
 
         stepsToMove++;
     }
 
-    return { 
-        part1: 0,
+    return {
+        part1: calculateManhattanDistance(currentLocation),
         part2: 0
     };
 }
 
-function move(stepsToMove: number, currentDirection: Direction, currentLocation: Location): Location
+function move(currentDirection: Direction, currentLocation: Location): Location
 {
     switch (currentDirection) 
     {
         case Direction.Right:
-            currentLocation.x += stepsToMove;
+            currentLocation.x++;
             break;
         
         case Direction.Up:
-            currentLocation.y += stepsToMove;
+            currentLocation.y++;
             break;
         
         case Direction.Left:
-            currentLocation.x -= stepsToMove;
+            currentLocation.x--;
             break;
         
         case Direction.Down:
-            currentLocation.y -= stepsToMove;
+            currentLocation.y--;
             break;
     }
+
+    return currentLocation;
 }
 
 function rotateToLeft(currentDirection: Direction): Direction
 {
-    const newDir = currentDirection = (currentDirection + 4 + 1) % 4;
-    return newDir;
+    return (currentDirection + 1) % 4;
 }
