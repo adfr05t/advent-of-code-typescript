@@ -3,7 +3,11 @@ import { readInput } from "../../utils/readInput.js";
 const filePath = "src/2017/day-04/input.txt";
 const input = readInput(filePath);
 
-console.log("Part 1 answer:", solvePuzzle(input).part1);
+const solution = solvePuzzle(input);
+
+console.log("Part 1 answer:", solution.part1);
+console.log("Part 2 answer:", solution.part2);
+
 
 function solvePuzzle(input: string): { part1: number, part2: number }
 {
@@ -30,9 +34,9 @@ function isPassPhraseValid(passPhrase: string): boolean
 
     for (let i = 0; i < words.length; i++)
     {
-        for (let j = 0; j < words.length && j !== i; j++)
+        for (let j = 0; j < words.length; j++)
         {
-            if (words[i] === words[j])
+            if (j !== i && words[i] === words[j])
             {
                 return false;
             }
