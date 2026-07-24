@@ -1,0 +1,5 @@
+Part 1 test cases:
+
+aa bb cc dd ee          - valid
+aa bb cc dd aa          - not valid
+aa bb cc dd aaa         - valid
