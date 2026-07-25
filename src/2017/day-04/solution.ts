@@ -12,36 +12,75 @@ console.log("Part 2 answer:", solution.part2);
 function solvePuzzle(input: string): { part1: number, part2: number }
 {
     const passPhrases = input.trim().split(/\r?\n/);
-    let validPassPhraseCount = 0;
+
+    let validPhrasesCountPart1 = 0;
+    let validPhrasesCountPart2 = 0;
+
 
     for (const passPhrase of passPhrases)
     {
-        if (isPassPhraseValid(passPhrase))
-        {
-            validPassPhraseCount++;
-        }
+		const words = passPhrase.split(" ");
+
+		if (!hasDuplicateWords(words))
+		{
+            validPhrasesCountPart1++;
+
+			if (!hasAnagrams(words))
+			{
+				validPhrasesCountPart2++;
+			}
+		}
     }
 
     return {
-        part1: validPassPhraseCount,
-        part2: 0
+        part1: validPhrasesCountPart1,
+        part2: validPhrasesCountPart2
     };
 }
 
-function isPassPhraseValid(passPhrase: string): boolean
+function hasDuplicateWords(words: string[]): boolean
 {
-    const words = passPhrase.split(" ");
-
     for (let i = 0; i < words.length; i++)
     {
         for (let j = 0; j < words.length; j++)
         {
             if (j !== i && words[i] === words[j])
             {
-                return false;
+                return true;
             }
         }
     }
 
-    return true;
+	return false;
+}
+
+function hasAnagrams(words: string[]): boolean
+{
+	for (let i = 0; i < words.length - 1; i++)
+    {
+        for (let j = i + 1; j < words.length; j++)
+        {
+            if (j !== i && words[j].length === words[i].length)
+            {
+				let numberOfMatchingLetters = 0;
+
+				for (let position = 0; position < words[i].length; position++)
+				{
+					const charToCheck = words[i].charAt(position);
+
+					if (words[j].includes(charToCheck))
+					{
+						numberOfMatchingLetters++;
+
+						if (numberOfMatchingLetters === words[j].length)
+						{
+							return true;
+						}
+					}
+				}
+            }
+        }
+    }
+
+	return false;
 }
