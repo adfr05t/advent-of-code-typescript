@@ -60,7 +60,7 @@ function hasAnagrams(words: string[]): boolean
     {
         for (let j = i + 1; j < words.length; j++)
         {
-            if (j !== i && words[j].length === words[i].length)
+            if (words[j].length === words[i].length)
             {
 				let numberOfMatchingLetters = 0;
 
