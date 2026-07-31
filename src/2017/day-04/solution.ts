@@ -42,9 +42,9 @@ function hasDuplicateWords(words: string[]): boolean
 {
     for (let i = 0; i < words.length; i++)
     {
-        for (let j = 0; j < words.length; j++)
+        for (let j = i + 1; j < words.length; j++)
         {
-            if (j !== i && words[i] === words[j])
+            if (words[i] === words[j])
             {
                 return true;
             }
