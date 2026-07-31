@@ -62,22 +62,13 @@ function hasAnagrams(words: string[]): boolean
         {
             if (words[j].length === words[i].length)
             {
-				let numberOfMatchingLetters = 0;
+                const firstWordSorted = words[i].split("").sort().join("");
+                const secondWordSorted = words[j].split("").sort().join("");
 
-				for (let position = 0; position < words[i].length; position++)
-				{
-					const charToCheck = words[i].charAt(position);
-
-					if (words[j].includes(charToCheck))
-					{
-						numberOfMatchingLetters++;
-
-						if (numberOfMatchingLetters === words[j].length)
-						{
-							return true;
-						}
-					}
-				}
+                if (firstWordSorted === secondWordSorted)
+                {
+                    return true;
+                }
             }
         }
     }
