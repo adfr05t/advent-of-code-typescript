@@ -10,22 +10,26 @@ console.log("Part 2 answer:", solution.part2);
 function solvePuzzle(input: string): { part1: number, part2: number } 
 {
     let dialPosition = 50;
-    let dialZeroCount = 0;
+    let dialAtZeroCount = 0;
+    let dialPassingZeroCount = 0;
 
     for (const line of input.trim().split("\n"))
     {
         const instruction = parseInstruction(line);
-        dialPosition = rotateDial(instruction.direction, instruction.distance, dialPosition);
+        const result = rotateDial(instruction.direction, instruction.distance, dialPosition);
+
+        dialPosition = result.dialPosition;
+        dialPassingZeroCount += result.dialPassedZeroCount;
 
         if (dialPosition === 0)
         {
-            dialZeroCount++;
+            dialAtZeroCount++;
         }
     }
 
     return {
-        part1: dialZeroCount,
-        part2: 0
+        part1: dialAtZeroCount,
+        part2: dialPassingZeroCount
     }
 }
 
@@ -40,20 +44,29 @@ function parseInstruction(line: string): { direction: string, distance: number }
     }
 }
 
-function rotateDial(direction: string, distance: number, dialPosition: number): number
+function rotateDial(direction: string, distance: number, dialPosition: number): { dialPosition: number, dialPassedZeroCount: number }
 {
+    let dialPassedZeroCount = 0;
     const dialRange = 100;
-    distance = distance % dialRange;
+    const wrappedDistance = distance % dialRange;
 
     if (direction === "R")
     {
-        dialPosition = (dialPosition + distance) % dialRange;
+        dialPassedZeroCount = Math.floor((dialPosition + distance) / dialRange);
+        dialPosition = (dialPosition + wrappedDistance) % dialRange;
     }
     else
     {
-        dialPosition = (dialPosition - distance + dialRange) % dialRange;
+        dialPassedZeroCount = Math.floor(
+            (distance + ((dialRange - dialPosition) % dialRange)) / dialRange
+        );
+
+        dialPosition = (dialPosition - wrappedDistance + dialRange) % dialRange;
     }
 
-    return dialPosition;
+    return {
+        dialPosition: dialPosition,
+        dialPassedZeroCount: dialPassedZeroCount
+    }
 }
 
