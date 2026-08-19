@@ -1,4 +1,4 @@
-# 2017 Day 1: Inverse Captcha
+# 2025 Day 1: Secret Entrance
 
 ## Puzzle
 https://adventofcode.com/2025/day/1
