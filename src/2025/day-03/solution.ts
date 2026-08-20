@@ -27,7 +27,7 @@ function getHighestJoltage(batteryBankString: string): number
 { 
     const batteryJoltages = batteryBankString.split("").map(Number);
 
-    // Get first battery joltage
+    // Get first battery joltage and position in bank
     let highestJoltageBattery = 0;
     let indexOfHighest = 0;
 
@@ -37,7 +37,7 @@ function getHighestJoltage(batteryBankString: string): number
 
         if (candidate > highestJoltageBattery)
         {
-            indexOfHighest = batteryJoltages.indexOf(candidate);
+            indexOfHighest = i;
             highestJoltageBattery = candidate;
         }
     }
@@ -55,8 +55,7 @@ function getHighestJoltage(batteryBankString: string): number
         }
     }
     
-    const highestJoltageBatteryPair = [highestJoltageBattery, highestJoltageRemainingBattery];
-    const joltageOfBatteryPair = Number(highestJoltageBatteryPair.join(""));
+    const joltageOfBatteryPair = Number([highestJoltageBattery, highestJoltageRemainingBattery].join(""));
 
     return joltageOfBatteryPair;
 }
