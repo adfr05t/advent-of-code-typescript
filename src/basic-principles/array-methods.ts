@@ -32,6 +32,13 @@ const sortedProfiles2 = profileData.some((profile) => profile.type === "Dog");
 
 console.log(sortedProfiles2); // 'true'
 
+// FILTER
+// makes a new array of only members that pass the condition(s)
+const filteredProfiles = profileData.filter(profile => profile.type === "Humano");
+
+console.log(filteredProfiles);
+
+
 
 
 
