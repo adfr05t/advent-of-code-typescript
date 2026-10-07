@@ -27,7 +27,7 @@ function solvePuzzle(input: string): { part1: number, part2: number }
 
     return {
         part1: sumOfInvalidIds, 
-        part2: 0
+        part2: 0 // to do
     };
 }
 
