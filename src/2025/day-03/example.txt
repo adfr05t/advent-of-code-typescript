@@ -1,11 +1,13 @@
-Part 1 Test Case:
+Test Cases:
 
 987654321111111
 811111111111119
 234234234234278
 818181911112111
 
-    Answer: 357
+    Part 1 Answer: 357
+    Part 2 Answer: 3121910778619
+
 
 
 Part 1 Test Case:
