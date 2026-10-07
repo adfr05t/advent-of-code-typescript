@@ -4,10 +4,9 @@ const filePath = "src/2025/day-03/input.txt";
 const input = readInput(filePath);
 
 const solution = solvePuzzle(input);
-console.log("Part 1 answer:", solution.part1);
-console.log("Part 2 answer:", solution.part2);
+console.log("Part 1 answer:", solution);
 
-function solvePuzzle(input: string): { part1: number, part2: number }
+function solvePuzzle(input: string): number
 {
     let sumOfJoltages = 0;
     const batteryBankStrings = input.split(/\r?\n/);
@@ -17,10 +16,7 @@ function solvePuzzle(input: string): { part1: number, part2: number }
         sumOfJoltages += getHighestJoltage(batteryBankString); 
     }
 
-    return {
-        part1: sumOfJoltages, 
-        part2: 0
-    };
+    return sumOfJoltages;
 }
 
 function getHighestJoltage(batteryBankString: string): number
