@@ -4,7 +4,7 @@ const filePath = "src/2025/day-03/input.txt";
 const input = readInput(filePath);
 
 const solution = solvePuzzle(input);
-console.log(solution);
+console.log("Part 2 answer:", solution);
 
 function solvePuzzle(input: string): number
 {
