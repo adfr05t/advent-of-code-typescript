@@ -11,4 +11,5 @@ https://adventofcode.com/2025/day/4
 - Aim: 
 
 ## Notes
--
+- Using a 'flatened' string method rather than 2D array.
+- Need to correctly identify and handle positions at far left/right of rows that will not have all 8 adjacent positions.
