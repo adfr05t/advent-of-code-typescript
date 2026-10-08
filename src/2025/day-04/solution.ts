@@ -35,8 +35,6 @@ function isRollAccessible(floorPlan: string, rollPosition: number, rowLength: nu
     // Far left floorPlan positions
     if (rollPosition % rowLength === 0)
     {
-       // console.log("Left", rollPosition);
-
         // Check neighbouring position
         adjacentRolls += positionContainsRoll(floorPlan[rollPosition + 1]);
 
