@@ -16,7 +16,7 @@ function solvePuzzle(input: string): number
     const splitInput = input.split(/\r?\n/);
     const rowLength = splitInput[0].length;
     const floorPlan = splitInput.join("");
-    const removedRolls: number[] = [];
+    const removedRolls = new Set<number>();
 
     let accessibleRollsTotal = 0;
 
@@ -35,18 +35,18 @@ function solvePuzzle(input: string): number
     }
 }
 
-function findAccessibleRolls(floorPlan: string, rowLength: number, removedRolls: number[]): number
+function findAccessibleRolls(floorPlan: string, rowLength: number, removedRolls: Set <number>): number
 {
     let accessibleRolls = 0;
 
     for (let i = 0; i < floorPlan.length; i++)
     {
-        if (floorPlan[i] ==="@" && !removedRolls.includes(i))
+        if (floorPlan[i] ==="@" && !removedRolls.has(i))
         {
             if (isRollAccessible(floorPlan, i, rowLength, removedRolls))
             {
                 accessibleRolls++;
-                removedRolls.push(i);
+                removedRolls.add(i);
             }
         }
     }
@@ -54,7 +54,7 @@ function findAccessibleRolls(floorPlan: string, rowLength: number, removedRolls:
     return accessibleRolls;
 }
 
-function isRollAccessible(floorPlan: string, rollPosition: number, rowLength: number, removedRolls: number[]): boolean
+function isRollAccessible(floorPlan: string, rollPosition: number, rowLength: number, removedRolls: Set <number>): boolean
 {
     let adjacentRolls = 0;
 
@@ -62,7 +62,7 @@ function isRollAccessible(floorPlan: string, rollPosition: number, rowLength: nu
     if (rollPosition % rowLength === 0)
     {
         // Check neighbouring position
-        if (!removedRolls.includes(rollPosition + 1))
+        if (!removedRolls.has(rollPosition + 1))
         {
             adjacentRolls += positionContainsRoll(floorPlan[rollPosition + 1]);
         }
@@ -70,7 +70,7 @@ function isRollAccessible(floorPlan: string, rollPosition: number, rowLength: nu
         // Check positions above
         for (let i = rollPosition - rowLength; i <= rollPosition - (rowLength - 1); i ++)
         {
-            if (!removedRolls.includes(i))
+            if (!removedRolls.has(i))
             {
                 adjacentRolls += positionContainsRoll(floorPlan[i]);
 
@@ -84,7 +84,7 @@ function isRollAccessible(floorPlan: string, rollPosition: number, rowLength: nu
         // Check positions below
         for (let i = rollPosition + rowLength; i <= rollPosition + (rowLength + 1); i ++)
         {
-            if (!removedRolls.includes(i))
+            if (!removedRolls.has(i))
             {
                 adjacentRolls += positionContainsRoll(floorPlan[i]);
 
@@ -101,7 +101,7 @@ function isRollAccessible(floorPlan: string, rollPosition: number, rowLength: nu
     else if ((rollPosition % rowLength === rowLength - 1))
     {
         // Check neighbouring position
-        if (!removedRolls.includes(rollPosition - 1))
+        if (!removedRolls.has(rollPosition - 1))
         {
             adjacentRolls += positionContainsRoll(floorPlan[rollPosition - 1]);
         }
@@ -109,7 +109,7 @@ function isRollAccessible(floorPlan: string, rollPosition: number, rowLength: nu
         // Check positions above
         for (let i = rollPosition - (rowLength + 1); i <= rollPosition - rowLength; i ++)
         {
-            if (!removedRolls.includes(i))
+            if (!removedRolls.has(i))
             {
                 adjacentRolls += positionContainsRoll(floorPlan[i]);
 
@@ -123,7 +123,7 @@ function isRollAccessible(floorPlan: string, rollPosition: number, rowLength: nu
         // Check positions below
         for (let i = rollPosition + (rowLength - 1); i <= rollPosition + rowLength; i ++)
         {
-            if (!removedRolls.includes(i))
+            if (!removedRolls.has(i))
             {
                 adjacentRolls += positionContainsRoll(floorPlan[i]);
 
@@ -141,7 +141,7 @@ function isRollAccessible(floorPlan: string, rollPosition: number, rowLength: nu
         // Check neighbouring positions
         for (let i = rollPosition - 1; i <= rollPosition + 1; i +=2)
         {
-            if (!removedRolls.includes(i))
+            if (!removedRolls.has(i))
             {
                 adjacentRolls += positionContainsRoll(floorPlan[i]);
             }
@@ -150,7 +150,7 @@ function isRollAccessible(floorPlan: string, rollPosition: number, rowLength: nu
         // Check positions above
         for (let i = rollPosition - (rowLength + 1); i <= rollPosition - (rowLength - 1); i ++)
         {
-            if (!removedRolls.includes(i))
+            if (!removedRolls.has(i))
             {
                 adjacentRolls += positionContainsRoll(floorPlan[i]);
 
@@ -164,7 +164,7 @@ function isRollAccessible(floorPlan: string, rollPosition: number, rowLength: nu
         // Check positions below
         for (let i = rollPosition + (rowLength - 1); i <= rollPosition + (rowLength + 1); i ++)
         {
-            if (!removedRolls.includes(i))
+            if (!removedRolls.has(i))
             {
                 adjacentRolls += positionContainsRoll(floorPlan[i]);
 
