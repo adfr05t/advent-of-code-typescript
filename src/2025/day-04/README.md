@@ -14,3 +14,5 @@ https://adventofcode.com/2025/day/4
 - Using a 'flatened' string method rather than 2D array.
 - Need to correctly identify and handle positions at far left/right of rows that will not have all 8 adjacent positions.
 - The flattened string method made part two relatively straightforward. I just needed to record the indexes of 'removed' rolls and discount those from checks on subsequent iterations.
+
+- There is a lot of repeated code in isRollAccessible (especially part 2). Would be good to return to this and refactor.
