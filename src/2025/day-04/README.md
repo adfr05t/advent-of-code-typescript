@@ -8,8 +8,11 @@ https://adventofcode.com/2025/day/4
     - An accessible roll is one that has no more than 3 rolls of paper in the 8 adjacent positions surrounding it.
         
 ## Part 2
-- Aim: 
+- Aim: As above, but imagine the accessible rolls are removed and iterate over the floorplan until no more are accessible
 
 ## Notes
 - Using a 'flatened' string method rather than 2D array.
 - Need to correctly identify and handle positions at far left/right of rows that will not have all 8 adjacent positions.
+- The flattened string method made part two relatively straightforward. I just needed to record the indexes of 'removed' rolls and discount those from checks on subsequent iterations.
+
+- There is a lot of repeated code in isRollAccessible (especially part 2). Would be good to return to this and refactor.

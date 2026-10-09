@@ -8,14 +8,14 @@ console.log("Part 1 answer", solution);
 
 function solvePuzzle(input: string): number
 {
-     const splitInput = input.split(/\r?\n/);
-     const rowLength = splitInput[0].length;
-     const floorPlan = splitInput.join("");
+    const splitInput = input.split(/\r?\n/);
+    const rowLength = splitInput[0].length;
+    const floorPlan = splitInput.join("");
 
     let accessibleRolls = 0;
 
-     for (let i = 0; i < floorPlan.length; i++)
-     {
+    for (let i = 0; i < floorPlan.length; i++)
+    {
         if (floorPlan[i] ==="@")
         {
             if (isRollAccessible(floorPlan, i, rowLength))
@@ -23,7 +23,7 @@ function solvePuzzle(input: string): number
                 accessibleRolls++;
             }
         }
-     }
+    }
 
     return accessibleRolls;
 }
