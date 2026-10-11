@@ -11,51 +11,39 @@ function solvePuzzle(input: string): number
     // NB: if the empty line might contain spaces use /\r?\n\s*\r?\n/
     const splitInput = input.split(/\r?\n\r?\n/);
 
-    const freshIdList = splitInput[0];
+    const freshIdRangeList = splitInput[0];
     const ingredientIdList = splitInput[1];
 
-    const freshIdRanges = freshIdList.split(/\r?\n/);
+    const freshIdRanges = freshIdRangeList.split(/\r?\n/);
     const ingredientIds = ingredientIdList.split(/\r?\n/);
-
-    const availableIngredients = new Set<number>();
-
-    for (const id of ingredientIds)
-    {
-        availableIngredients.add(Number(id));
-    }
 
     let freshIngredientCount = 0;
 
-    for (const idRange of freshIdRanges)
+    for (const id of ingredientIds)
     {
-        freshIngredientCount += findAvailableIngredients(idRange, availableIngredients);
-
-        if (availableIngredients.size === 0)
+        if (isIngredientFresh(id, freshIdRanges))
         {
-            return freshIngredientCount;
+            freshIngredientCount ++;
         }
     }
 
     return freshIngredientCount;
 }
 
-function findAvailableIngredients(idRange: string, availableIngredients: Set<Number>): number
+function isIngredientFresh(ingredientId: string, freshIdRanges: string[]): boolean
 {
-    let availableIngredientsFound = 0;
-
-    // parse idRange strings
-    const range = idRange.split("-");
-    const min = Number(range[0]);
-    const max = Number(range[1]);
-
-    for (let i = min; i <= max; i++)
+    for (const idRange of freshIdRanges)
     {
-        if (availableIngredients.has(i))
+        // parse idRange strings (>) DO THIS EARLIER
+        const range = idRange.split("-");
+        const min = Number(range[0]);
+        const max = Number(range[1]);
+
+        if (Number(ingredientId) >= min && Number(ingredientId) <= max)
         {
-            availableIngredientsFound++;
-            availableIngredients.delete(i);
+            return true;
         }
     }
 
-    return availableIngredientsFound;
+    return false;
 }
