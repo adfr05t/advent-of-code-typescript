@@ -15,13 +15,20 @@ function solvePuzzle(input: string): number
     const ingredientIdList = splitInput[1];
 
     const freshIdRanges = freshIdRangeList.split(/\r?\n/);
-    const ingredientIds = ingredientIdList.split(/\r?\n/);
+    const ingredientIds = ingredientIdList.split(/\r?\n/).map(Number);
+
+    const rangesArray = freshIdRanges.map((idRange) =>
+    {
+        const [min, max] = idRange.split("-").map(Number);
+
+        return { min, max };
+    });
 
     let freshIngredientCount = 0;
 
     for (const id of ingredientIds)
     {
-        if (isIngredientFresh(id, freshIdRanges))
+        if (isIngredientFresh(id, rangesArray))
         {
             freshIngredientCount ++;
         }
@@ -30,16 +37,11 @@ function solvePuzzle(input: string): number
     return freshIngredientCount;
 }
 
-function isIngredientFresh(ingredientId: string, freshIdRanges: string[]): boolean
+function isIngredientFresh(ingredientId: number, rangesArray: { max: number, min: number }[]): boolean
 {
-    for (const idRange of freshIdRanges)
+    for (const range of rangesArray)
     {
-        // parse idRange strings (>) DO THIS EARLIER
-        const range = idRange.split("-");
-        const min = Number(range[0]);
-        const max = Number(range[1]);
-
-        if (Number(ingredientId) >= min && Number(ingredientId) <= max)
+        if (ingredientId >= range.min && ingredientId <= range.max)
         {
             return true;
         }
