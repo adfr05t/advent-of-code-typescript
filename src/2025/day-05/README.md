@@ -18,4 +18,9 @@ Part 1:
 Part 2:
 - Initial thoughts:
     - Substract min from max of each range to get number of values contained within. 
-    - Check for overlapping ranges and, if detected, calculate the number of shared values and subtract that number from the total number of IDs. 
+    - Check for overlapping ranges and, if detected, calculate the number of shared values and subtract that number from the total number of IDs.
+    - This will not work due to values being shared by multiple ranges
+- Improved solution:
+    - Sort ranges by their minimum value
+    - Determine if consecutive ranges overlap, and if so merge them into a single range.
+    - When no more ranges can be merged, calculate total the size of all remaining ranges. 
