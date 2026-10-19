@@ -6,9 +6,9 @@ const input = readInput(filePath);
 const solution = solvePuzzle(input);
 console.log("Part 2 Answer:", solution);
 
-function solvePuzzle(input: string)
+function solvePuzzle(input: string): number
 {
-    // Only need the first part of the input
+    // Take only the part of the input before blank line
     const idRangesList = input.split(/\r?\n\r?\n/)[0];
     const idRangeStrings = idRangesList.split(/\r?\n/);
 
@@ -19,26 +19,34 @@ function solvePuzzle(input: string)
         return { min, max };
     });
 
+    // Sort ranges by min
     ranges.sort((a, b) => a.min - b.min);
 
     const compressedRanges = [];
 
-    for (let i = 0; i < ranges.length; i++)
+    for (const range of ranges)
     {
-        const currentRange = ranges[i];
-        const nextRange = ranges[i + 1]; 
+        const lastRange = compressedRanges[compressedRanges.length - 1];
 
-        // if overlapping
-        if (nextRange.min <= currentRange.max)
+        if (!lastRange || range.min > lastRange.max)
         {
-            // merge the two ranges
-            mergeRanges(currentRange, nextRange);
+            // No overlap: add as a new range
+            compressedRanges.push(range);
+        }
+        else
+        {
+            // Overlap: disregard range.min since it falls within an existing range; extend the max of the existing range, if required
+            lastRange.max = Math.max(lastRange.max, range.max);
         }
     }
-}
 
-function mergeRanges(rangeA: { min: number, max: number }, rangeB: { min: number, max: number })
-{
-    // change A max to the greater of A and B max
-    rangeA.max = Math.max(rangeA.max, rangeB.max);
+    // Count the total number of ids in the adjusted ranges
+    let totalIds = 0;
+
+    for (const range of compressedRanges)
+    {
+        totalIds += range.max - range.min + 1;
+    }
+
+    return totalIds;
 }
