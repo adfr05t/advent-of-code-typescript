@@ -58,20 +58,30 @@ function solvePuzzle(input: string): number
         }
     }
 
-    console.log(operationIndicators);
-
-    // if it were all addition, for simplicity:
     for (let i = 0; i < rowInputs[0].length; i++)
     {
-        const column = i;
-        let sumOfColumn = 0;
-
-        for (let j = 0; j < rowInputs.length; j++)
+        if (operationIndicators[i] === "*")
         {
-            sumOfColumn += rowInputs[j][column];
-        }
+            let multipliedColumn = 1;
 
-        console.log(sumOfColumn);
+            for (let j = 0; j < rowInputs.length; j++)
+            {
+                multipliedColumn *= rowInputs[j][i];
+            }
+
+            grandTotal += multipliedColumn;
+        } 
+        else if (operationIndicators[i] === "+")
+        {
+            let sumOfColumn = 0;
+
+            for (let j = 0; j < rowInputs.length; j++)
+            {
+                sumOfColumn += rowInputs[j][i];
+            }
+
+            grandTotal += sumOfColumn;
+        }
     }
 
     return grandTotal;
