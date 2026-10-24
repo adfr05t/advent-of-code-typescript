@@ -10,13 +10,45 @@ function solvePuzzle(input: string): number
 {
     let grandTotal = 0;
 
-    // Convert input into an array of lines
+    // Parse input
     const inputLines = input.split(/\r?\n/);
-    console.log(inputLines);
+    const rowInputs = parseRows(inputLines)
+    const operationIndicators = parseOperationIndicators(inputLines);
 
-    const rowInputs: number[][] = [];
+    // Perform the calculations and add results to grandTotal
+    for (let i = 0; i < rowInputs[0].length; i++)
+    {
+        if (operationIndicators[i] === "*")
+        {
+            let multipliedColumn = 1;
 
-    // the last line is the symbols to specify the operation so treat that differently
+            for (let j = 0; j < rowInputs.length; j++)
+            {
+                multipliedColumn *= rowInputs[j][i];
+            }
+
+            grandTotal += multipliedColumn;
+        } 
+        else if (operationIndicators[i] === "+")
+        {
+            let sumOfColumn = 0;
+
+            for (let j = 0; j < rowInputs.length; j++)
+            {
+                sumOfColumn += rowInputs[j][i];
+            }
+
+            grandTotal += sumOfColumn;
+        }
+    }
+
+    return grandTotal;
+}
+
+function parseRows(inputLines: string[]): number[][]
+{
+    const rowInputs: number[][] = []
+
     for (let i = 0; i < inputLines.length -1; i++)
     {
         let numberString = "";
@@ -46,6 +78,11 @@ function solvePuzzle(input: string): number
         }
     }
 
+    return rowInputs;
+}
+
+function parseOperationIndicators(inputLines: string[]): string[]
+{
     const operationIndicators: string[] = [];
 
     for (let i = 0; i < inputLines[inputLines.length - 1].length; i++)
@@ -58,31 +95,5 @@ function solvePuzzle(input: string): number
         }
     }
 
-    for (let i = 0; i < rowInputs[0].length; i++)
-    {
-        if (operationIndicators[i] === "*")
-        {
-            let multipliedColumn = 1;
-
-            for (let j = 0; j < rowInputs.length; j++)
-            {
-                multipliedColumn *= rowInputs[j][i];
-            }
-
-            grandTotal += multipliedColumn;
-        } 
-        else if (operationIndicators[i] === "+")
-        {
-            let sumOfColumn = 0;
-
-            for (let j = 0; j < rowInputs.length; j++)
-            {
-                sumOfColumn += rowInputs[j][i];
-            }
-
-            grandTotal += sumOfColumn;
-        }
-    }
-
-    return grandTotal;
+    return operationIndicators;
 }
