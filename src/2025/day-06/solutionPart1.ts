@@ -13,33 +13,13 @@ function solvePuzzle(input: string): number
     // Parse input
     const inputLines = input.split(/\r?\n/);
     const rowInputs = parseRows(inputLines)
-    const operationIndicators = parseOperationIndicators(inputLines);
+    const operators = parseOperationIndicators(inputLines);
 
-    // Perform the calculations and add results to grandTotal
+    // Perform calculations and add to grand total
     for (let i = 0; i < rowInputs[0].length; i++)
     {
-        if (operationIndicators[i] === "*")
-        {
-            let multipliedColumn = 1;
-
-            for (let j = 0; j < rowInputs.length; j++)
-            {
-                multipliedColumn *= rowInputs[j][i];
-            }
-
-            grandTotal += multipliedColumn;
-        } 
-        else if (operationIndicators[i] === "+")
-        {
-            let sumOfColumn = 0;
-
-            for (let j = 0; j < rowInputs.length; j++)
-            {
-                sumOfColumn += rowInputs[j][i];
-            }
-
-            grandTotal += sumOfColumn;
-        }
+        const result = performCalculation(rowInputs, i, operators[i]);
+        grandTotal += result;
     }
 
     return grandTotal;
@@ -96,4 +76,32 @@ function parseOperationIndicators(inputLines: string[]): string[]
     }
 
     return operationIndicators;
+}
+
+function performCalculation(rowInputs: number[][], column: number, operator: string): number
+{
+    if (operator === "*")
+    {
+        let product = 1;
+
+        for (let j = 0; j < rowInputs.length; j++)
+        {
+            product *= rowInputs[j][column];
+        }
+
+        return product;
+    } 
+    else if (operator === "+")
+    {
+        let sum = 0;
+
+        for (let j = 0; j < rowInputs.length; j++)
+        {
+            sum += rowInputs[j][column];
+        }
+
+        return sum;
+    }
+
+    return 0;
 }
