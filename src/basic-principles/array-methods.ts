@@ -27,23 +27,25 @@ const sortedProfiles1 = profileData.map(profile => ({
 console.log(sortedProfiles1); 
 
 // SOME
-// does at least one member meet the callback's condition Returns true/false
+// Does at least one member meet the callback's condition? Returns true/false
 const sortedProfiles2 = profileData.some((profile) => profile.type === "Dog"); 
 
 console.log(sortedProfiles2); // 'true'
 
 // FILTER
-// makes a new array of only members that pass the condition(s)
+// Makes a new array consisting of members that pass the condition(s)
 const filteredProfiles = profileData.filter(profile => profile.type === "Humano");
 
 console.log(filteredProfiles);
 
+// REDUCE
+// Reduce an array to a single value
+const reducedProfiles = profileData.reduce((accumulator, profile) =>
+{
+    return accumulator + profile.name + profile.type
+}, "");
 
+console.log(reducedProfiles);
 
-
-
-
-// const sortedProfiles = profileData.filter()
-
-
-// const sortedProfiles = profileData.reduce()
+//...or, short form with implied return:
+const reducedProfiles2 = profileData.reduce((accumulator, profile) => accumulator + profile.name + profile.type, "");
