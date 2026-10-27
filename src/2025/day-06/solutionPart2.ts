@@ -1,4 +1,3 @@
-import { isNumberObject } from "node:util/types";
 import { readInput } from "../../utils/readInput";
 
 const filePath = "src/2025/day-06/input.txt";
@@ -9,16 +8,13 @@ console.log("Part 2 Answer:", solution);
 
 function solvePuzzle(input: string): number
 {
-
     const inputRows = input.split(/\r?\n/);
+    let grandTotal = 0;
+    let valuesInColumn: number[] = [];
 
     for (let column = inputRows[0].length - 1; column >= 0; column--)
     {
-        // Get the character in each row barring last and form them into a value (unless all spaces)
-        // When last row contains * or + perform the operation and skip the next column (can simply do i - 1).
-
         const charactersInColumn: string[] = [];
-        const valuesInColumn: number[] = [];
 
         for (let row = 0; row < inputRows.length - 1; row++)
         {   
@@ -36,20 +32,47 @@ function solvePuzzle(input: string): number
         {
             valuesInColumn.push(Number(charactersInColumn.join("")));
 
-            if (operator === "+")
+            if (operator === "+" || operator === "*")
             {
-                // Get sum of values
-                column--;
-            }
-            else if (operator === "*")
-            {
-                // Get product of values
-                column--;
-            }
-        }
+                if (operator === "+")
+                {
+                    grandTotal += getSum(valuesInColumn);
+                }
+                else if (operator === "*")
+                {
+                    grandTotal += getProduct(valuesInColumn);
+                }
 
-        console.log(column, valuesInColumn, operator);
+                valuesInColumn = [];
+                column--;
+            }
+            
+        }
     }
 
-    return 0;
+    return grandTotal;
+}
+
+function getSum(values: number[]): number
+{
+    let result = 0;
+
+    for (const value of values)
+    {
+        result += value;
+    }
+
+    return result;
+}
+
+function getProduct(values: number[]): number
+{
+    let result = 1;
+
+    for (const value of values)
+    {
+        result *= value;
+    }
+
+    return result;
 }
