@@ -16,8 +16,9 @@ function solvePuzzle(input: string): number
 
     for (const row of inputRows)
     {
-        const [left, right] = row.split("  ");
-
+        // Split at one or more whitespace characters
+        const [left, right] = row.trim().split(/\s+/);
+        
         list1.push(Number(left));
         list2.push(Number(right));
     }
