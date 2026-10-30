@@ -15,3 +15,4 @@ https://adventofcode.com/2024/day/1
   - Find the total of the results of each number in the first list being multiplied by the number of times it appears in the second list.
 
 ## Notes
+- Part 2 solution could potentially be optimised by keeping a record of the occurances of each number of list 1 in list 2, since the same number may appear in list 1 several times.
