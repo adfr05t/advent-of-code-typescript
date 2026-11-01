@@ -36,6 +36,13 @@ console.log(sortedProfiles2); // 'true'
 // Makes a new array consisting of members that pass the condition(s)
 const filteredProfiles = profileData.filter(profile => profile.type === "Humano");
 
+// filter by index
+for (let i = 0; i < profileData.length; i++)
+{
+    const variation = profileData.filter((_, index) => index !== i);
+    console.log("variation", variation);
+}
+
 console.log(filteredProfiles);
 
 // REDUCE
@@ -46,6 +53,14 @@ const reducedProfiles = profileData.reduce((accumulator, profile) =>
 }, "");
 
 console.log(reducedProfiles);
+
+const evenNumbers = [2, 4, 6, 8];
+// return product of numbers in array
+const reducedEvenNumbers = evenNumbers.reduce((accumulator, number) => accumulator * number, 1);
+console.log("--", reducedEvenNumbers);
+// sum
+const summedEvenNumbers = evenNumbers.reduce((acc, number) => acc + number, 0);
+console.log("---", summedEvenNumbers);
 
 //...or, short form with implied return:
 const reducedProfiles2 = profileData.reduce((accumulator, profile) => accumulator + profile.name + profile.type, "");
