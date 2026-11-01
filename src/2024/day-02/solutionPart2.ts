@@ -8,12 +8,6 @@ console.log("Part 1 Answer:", solution);
 
 function solvePuzzle(input: string): number
 {
-
-    // PART TWO:
-
-    // levels can be repaired if:
-        // rule 1: only one level breaks the all asc/desc pattern
-        // rule 2: if two adjacent levels are the same, or if the max allowable difference between adjacent levels is exceeded by the 1st and 2nd levels or the 4th and 5th levels.
     const reports = input.split(/\r?\n/);
 
     let safeReportCount = 0;
@@ -33,6 +27,12 @@ function isReportSafe(report: string): boolean
 {
     const levels = report.trim().split(/\s+/).map(Number);
 
+    if (allAscendingOrDescending(levels) && differencesWithinRange(levels))
+    {
+        return true;
+    }
+    
+    // A report can also be considered safe if it would be made so by the removal of a single level, so check the possible variations
     for (let i = 0; i < levels.length; i++)
     {
         // '_' used to indicate that the parameter is intentionally unused
@@ -43,7 +43,7 @@ function isReportSafe(report: string): boolean
             return true;
         }
     }
-
+    
     return false;
 }
 
