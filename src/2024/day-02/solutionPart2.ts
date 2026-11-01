@@ -33,17 +33,11 @@ function isReportSafe(report: string): boolean
 {
     const levels = report.trim().split(/\s+/).map(Number);
 
-    const levelVariations: number[][] = [];
-
     for (let i = 0; i < levels.length; i++)
     {
         // '_' used to indicate that the parameter is intentionally unused
         const variation = levels.filter((_, index) => index !== i);
-        levelVariations.push(variation);
-    }
 
-    for (const variation of levelVariations)
-    {
         if (allAscendingOrDescending(variation) && differencesWithinRange(variation))
         {
             return true;
@@ -51,7 +45,6 @@ function isReportSafe(report: string): boolean
     }
 
     return false;
-
 }
 
 function allAscendingOrDescending(levels: number[]): boolean
