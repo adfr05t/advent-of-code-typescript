@@ -14,7 +14,6 @@ function solvePuzzle(input: string): number
 
     // Remove new-line characters from input
     const flattenedInput = input.replace(/\r?\n/g, "");
-
     const targetWord = "XMAS";
 
     return findMatches(flattenedInput, rowLength, targetWord);
@@ -26,99 +25,170 @@ function findMatches(input: string, rowLength: number, targetWord: string): numb
 
     for (let i = 0; i < input.length; i++)
     {
-        console.log(input[i], i);
-
         if (input[i] === targetWord[0])
         {   
-            // BACKWARDS
-            // does i - 1 === M
-            console.log(input[i], "is X")
-            if (backwardsMatch(input, i, targetWord))
+            // BACK
+            if (i % rowLength >= 3)
             {
-                targetWordOccurances++;
-                console.log(i, "back");
+                if (backwardMatch(input, i, targetWord))
+                {
+                    targetWordOccurances++;
+                }
+
+                if (i >= rowLength * 3) // UP
+                {
+                    if (diagonalBackUpMatch(input, i, targetWord, rowLength))
+                    {
+                        targetWordOccurances++;
+                    }
+                }
+
+                if (i < input.length - (rowLength * 3)) // DOWN
+                {
+                    if (diagonalBackDownMatch(input, i, targetWord, rowLength))
+                    {
+                        targetWordOccurances++;
+                    }
+                }
             }
-            if (forwardsMatch(input, i, targetWord))
+            // FORWARD
+            if (i % rowLength <= rowLength - 4)
             {
-                targetWordOccurances++;
-                console.log(i, "forwards");
+                if (forwardMatch(input, i, targetWord))
+                {
+                    targetWordOccurances++;
+                }
 
+                if (i >= rowLength * 3) // UP
+                {
+                    if (diagonalForwardUpMatch(input, i, targetWord, rowLength))
+                    {
+                        targetWordOccurances++;
+                    }
+                }
+
+                if (i < input.length - (rowLength * 3)) // DOWN
+                {
+                    if (diagonalForwardDownMatch(input, i, targetWord, rowLength))
+                    {
+                        targetWordOccurances++;
+                    }
+                }
             }
-
-            //FORWARDS
-            // i + 1
-
             //UP 
-            // i - row length
-
+            if (i >= rowLength * 3)
+            {
+                if (upwardMatch(input, i, targetWord, rowLength))
+                {
+                    targetWordOccurances++;
+                }
+            }
             //DOWN
-            // i + grid row length
-
-            //DIAGONAL: forwards-up, forwards-down, backwards-up, backwards-down
+            if (i < input.length - (rowLength * 3))
+            {
+                if (downwardMatch(input, i, targetWord, rowLength))
+                {
+                    targetWordOccurances++;
+                }
+            }
         }
     }
 
     return targetWordOccurances;
 }
 
-// NEED RULES ABOUT VALID START POINTS
-// forward: if i % 10 <= 6
-// backward: if i % 10 >= 3
-// up: i >= rowLength * 3
-// down: i < input.length - (rowLength * 3) 
-
-// each diagonal is a COMB0 of two from above rules.
-
-// these should be checked before decideing which match-checking functions to call. They should be nested conditions. eg if forward valid --> if ...
-
-
-function backwardsMatch(input: string, i: number, targetWord: string): boolean
+function backwardMatch(input: string, i: number, targetWord: string): boolean
 {   
-    console.log("looking for backwards match")
-
-    if (i % 10 < 3)
-    {
-        console.log("not enough characters in direction");
-        return false;
-    }
-
     for (let j = 1; j < targetWord.length; j++)
     {
-        console.log(i - j, input[i - j]);
-
         if (input[i - j] !== targetWord[j])
         {
-            console.log("check failed");
             return false;
         }
     }
-
-    console.log("MATCH");
-
     return true;
 }
 
-function forwardsMatch(input: string, i: number, targetWord: string): boolean
+function forwardMatch(input: string, i: number, targetWord: string): boolean
 {
-    console.log("looking for forward match")
-
-    if (i % 10 > 6)
-    {
-        console.log("not enough characters in direction");
-        return false;
-    }
-
     for (let j = 1; j < targetWord.length; j++)
     {
-        console.log(i + j, input[i + j]);
         if (input[i + j] !== targetWord[j])
         {
-            console.log("check failed");
             return false;
         }
     }
-    console.log("MATCH");
-
     return true;
 }
 
+function upwardMatch(input: string, i: number, targetWord: string, rowLength: number): boolean
+{
+    for (let j = 1; j < targetWord.length; j++)
+    {
+        if (input[i - (rowLength * j)] !== targetWord[j])
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+function downwardMatch(input: string, i: number, targetWord: string, rowLength: number): boolean
+{
+    for (let j = 1; j < targetWord.length; j++)
+    {
+        if (input[i + (rowLength * j)] !== targetWord[j])
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+function diagonalBackUpMatch(input: string, i: number, targetWord: string, rowLength: number): boolean
+{
+    for (let j = 1; j < targetWord.length; j++)
+    {
+        if (input[i - (rowLength * j) - j] !== targetWord[j])
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+function diagonalBackDownMatch(input: string, i: number, targetWord: string, rowLength: number): boolean
+{
+    for (let j = 1; j < targetWord.length; j++)
+    {
+        if (input[i + (rowLength * j) - j] !== targetWord[j])
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+function diagonalForwardUpMatch(input: string, i: number, targetWord: string, rowLength: number): boolean
+{
+    for (let j = 1; j < targetWord.length; j++)
+    {
+        if (input[i - (rowLength * j) + j] !== targetWord[j])
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+function diagonalForwardDownMatch(input: string, i: number, targetWord: string, rowLength: number): boolean
+{
+    for (let j = 1; j < targetWord.length; j++)
+    {
+        if (input[i + (rowLength * j) + j] !== targetWord[j])
+        {
+            return false;
+        }
+    }
+    return true;
+}
