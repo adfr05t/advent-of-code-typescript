@@ -27,66 +27,66 @@ function findMatches(input: string, rowLength: number, targetWord: string): numb
     {
         if (input[i] === targetWord[0])
         {   
-            // BACK
-            if (i % rowLength >= 3)
+            // LEFT
+            if (i % rowLength >= targetWord.length - 1)
             {
-                if (backwardMatch(input, i, targetWord))
+                if (findMatch(input, i, targetWord, -1, 0))
                 {
                     targetWordOccurances++;
                 }
-
-                if (i >= rowLength * 3) // UP
+                // LEFT-UP
+                if (i >= rowLength * (targetWord.length - 1))
                 {
-                    if (diagonalBackUpMatch(input, i, targetWord, rowLength))
+                    if (findMatch(input, i, targetWord, -1, -1, rowLength))
                     {
                         targetWordOccurances++;
                     }
                 }
-
-                if (i < input.length - (rowLength * 3)) // DOWN
+                // LEFT-DOWN
+                if (i < input.length - (rowLength * (targetWord.length - 1)))
                 {
-                    if (diagonalBackDownMatch(input, i, targetWord, rowLength))
+                    if (findMatch(input, i, targetWord, -1, 1, rowLength))
                     {
                         targetWordOccurances++;
                     }
                 }
             }
-            // FORWARD
-            if (i % rowLength <= rowLength - 4)
+            // RIGHT
+            if (i % rowLength < rowLength - (targetWord.length - 1))
             {
-                if (forwardMatch(input, i, targetWord))
+                if (findMatch(input, i, targetWord, 1, 0))
                 {
                     targetWordOccurances++;
                 }
-
-                if (i >= rowLength * 3) // UP
+                // RIGHT-UP
+                if (i >= rowLength * (targetWord.length - 1))
                 {
-                    if (diagonalForwardUpMatch(input, i, targetWord, rowLength))
+                    if (findMatch(input, i, targetWord, 1, -1, rowLength))
                     {
                         targetWordOccurances++;
                     }
                 }
-
-                if (i < input.length - (rowLength * 3)) // DOWN
+                // RIGHT-DOWN
+                if (i < input.length - (rowLength * (targetWord.length - 1)))
                 {
-                    if (diagonalForwardDownMatch(input, i, targetWord, rowLength))
+                    if (findMatch(input, i, targetWord, 1, 1, rowLength))
                     {
                         targetWordOccurances++;
                     }
                 }
             }
-            //UP 
-            if (i >= rowLength * 3)
+            // UP 
+            if (i >= rowLength * (targetWord.length - 1))
             {
-                if (upwardMatch(input, i, targetWord, rowLength))
+                if (findMatch(input, i, targetWord, 0, -1, rowLength))
                 {
                     targetWordOccurances++;
                 }
             }
-            //DOWN
-            if (i < input.length - (rowLength * 3))
+            // DOWN
+            if (i < input.length - (rowLength * (targetWord.length - 1)))
             {
-                if (downwardMatch(input, i, targetWord, rowLength))
+                if (findMatch(input, i, targetWord, 0, 1, rowLength))
                 {
                     targetWordOccurances++;
                 }
@@ -97,95 +97,15 @@ function findMatches(input: string, rowLength: number, targetWord: string): numb
     return targetWordOccurances;
 }
 
-function backwardMatch(input: string, i: number, targetWord: string): boolean
-{   
-    for (let j = 1; j < targetWord.length; j++)
-    {
-        if (input[i - j] !== targetWord[j])
-        {
-            return false;
-        }
-    }
-    return true;
-}
-
-function forwardMatch(input: string, i: number, targetWord: string): boolean
+function findMatch(input: string, startingIndex: number, targetWord: string,  horizontalDirection: number, verticalDirection: number, rowLength?: number,): boolean
 {
     for (let j = 1; j < targetWord.length; j++)
     {
-        if (input[i + j] !== targetWord[j])
-        {
-            return false;
-        }
-    }
-    return true;
-}
+        rowLength = rowLength ?? 0;
 
-function upwardMatch(input: string, i: number, targetWord: string, rowLength: number): boolean
-{
-    for (let j = 1; j < targetWord.length; j++)
-    {
-        if (input[i - (rowLength * j)] !== targetWord[j])
-        {
-            return false;
-        }
-    }
-    return true;
-}
+        const indexToCheck = startingIndex + (horizontalDirection * j) + (verticalDirection * rowLength * j);
 
-function downwardMatch(input: string, i: number, targetWord: string, rowLength: number): boolean
-{
-    for (let j = 1; j < targetWord.length; j++)
-    {
-        if (input[i + (rowLength * j)] !== targetWord[j])
-        {
-            return false;
-        }
-    }
-    return true;
-}
-
-function diagonalBackUpMatch(input: string, i: number, targetWord: string, rowLength: number): boolean
-{
-    for (let j = 1; j < targetWord.length; j++)
-    {
-        if (input[i - (rowLength * j) - j] !== targetWord[j])
-        {
-            return false;
-        }
-    }
-    return true;
-}
-
-function diagonalBackDownMatch(input: string, i: number, targetWord: string, rowLength: number): boolean
-{
-    for (let j = 1; j < targetWord.length; j++)
-    {
-        if (input[i + (rowLength * j) - j] !== targetWord[j])
-        {
-            return false;
-        }
-    }
-    return true;
-}
-
-function diagonalForwardUpMatch(input: string, i: number, targetWord: string, rowLength: number): boolean
-{
-    for (let j = 1; j < targetWord.length; j++)
-    {
-        if (input[i - (rowLength * j) + j] !== targetWord[j])
-        {
-            return false;
-        }
-    }
-    return true;
-}
-
-function diagonalForwardDownMatch(input: string, i: number, targetWord: string, rowLength: number): boolean
-{
-    for (let j = 1; j < targetWord.length; j++)
-    {
-        if (input[i + (rowLength * j) + j] !== targetWord[j])
+        if (input[indexToCheck] !== targetWord[j])
         {
             return false;
         }
