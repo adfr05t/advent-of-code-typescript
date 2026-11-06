@@ -8,3 +8,6 @@ SMSMSASXSS
 SAXAMASAAA
 MAMMMXMMMM
 MXMXAXMASX
+
+    Part 1 answer: 18
+    Part 2 answer: 9
