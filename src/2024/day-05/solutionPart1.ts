@@ -10,8 +10,8 @@ console.log("Part 1 Answer:", solution);
 
 function solvePuzzle(input: string): number
 {
-    let total = 0;
-    // Split at the full blank line
+    let sumOfMiddlePages = 0;
+
     const splitInput = input.split(/\r?\n\r?\n/);
 
     const ruleStrings = splitInput[0].split(/\r?\n/);
@@ -31,27 +31,27 @@ function solvePuzzle(input: string): number
         if (isOrderCorrect(pageNumbers, orderingRules))
         {
             const middlePageIndex = (pageNumbers.length - 1) / 2;
-            total += pageNumbers[middlePageIndex];
+            sumOfMiddlePages += pageNumbers[middlePageIndex];
         }
     }
 
-    return total;
+    return sumOfMiddlePages;
 }
 
 function isOrderCorrect(pageNumbers: number[], orderingRules: OrderingRule[]): boolean
 {
-    // Iterate from last member to 2nd (no need to evaluate 1st as there are no pages before it)
-    for (let i = pageNumbers.length - 1; i > 0; i--)
+    // Iterate from last member to 2nd (no need to evaluate 1st as no pages come before it).
+    for (let currentPage = pageNumbers.length - 1; currentPage > 0; currentPage--)
     {
-        const page = pageNumbers[i];
+        const page = pageNumbers[currentPage];
 
-        for (let j = 0; j < orderingRules.length; j++)
+        for (let ruleIndex = 0; ruleIndex < orderingRules.length; ruleIndex++)
         {
-            if (page === orderingRules[j].before)
+            if (page === orderingRules[ruleIndex].before)
             {
-                for (let k = 0; k < i; k++)
+                for (let earlierPage = 0; earlierPage < currentPage; earlierPage++)
                 {
-                    if (pageNumbers[k] === orderingRules[j].after)
+                    if (pageNumbers[earlierPage] === orderingRules[ruleIndex].after)
                     {
                         return false;
                     }
