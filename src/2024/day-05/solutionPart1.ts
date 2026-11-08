@@ -8,23 +8,9 @@ const input = readInput(filePath);
 const solution = solvePuzzle(input);
 console.log("Part 1 Answer:", solution);
 
-
-
-//which updates are already in the right order
-//...sum the middle pages of them
-
-/*EVALUATE EACH 'UPDATE' BY:
-    - iterate through each num in the update
-    - check against each of the FIRST in the rule number-pairs
-    - for each match, check the 2nd number in the pair is not in the update before current number
-    - might be more efficient to start at the END of update. No need to check index 0.
-    */
 function solvePuzzle(input: string): number
 {
-    // split input into two parts
-//  page ordering rules: store as two numbers in array (of arrays)
-//  pages to print: store per line (one line is one update for printing) as number array
-    const total = 0;
+    let total = 0;
     // Split at the full blank line
     const splitInput = input.split(/\r?\n\r?\n/);
 
@@ -40,22 +26,39 @@ function solvePuzzle(input: string): number
 
     for (const updateString of updateStrings)
     {
-        if (isOrderCorrect(updateString, orderingRules))
+        const pageNumbers = updateString.split(",").map(Number);
+
+        if (isOrderCorrect(pageNumbers, orderingRules))
         {
-            
+            const middlePageIndex = (pageNumbers.length - 1) / 2;
+            total += pageNumbers[middlePageIndex];
         }
     }
 
-    return 0;
+    return total;
 }
 
-function isOrderCorrect(updateString: string, orderingRules: OrderingRule[]): boolean
+function isOrderCorrect(pageNumbers: number[], orderingRules: OrderingRule[]): boolean
 {
+    // Iterate from last member to 2nd (no need to evaluate 1st as there are no pages before it)
+    for (let i = pageNumbers.length - 1; i > 0; i--)
+    {
+        const page = pageNumbers[i];
 
-}
+        for (let j = 0; j < orderingRules.length; j++)
+        {
+            if (page === orderingRules[j].before)
+            {
+                for (let k = 0; k < i; k++)
+                {
+                    if (pageNumbers[k] === orderingRules[j].after)
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+    }
 
-// Use this to get the middle page num by it's index
-function middlePageIndex(numberOfPages: number): number
-{
-    return (numberOfPages - 1) / 2;
+    return true;
 }
