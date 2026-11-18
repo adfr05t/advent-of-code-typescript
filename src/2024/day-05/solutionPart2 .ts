@@ -12,6 +12,7 @@ function solvePuzzle(input: string): number
 {
     let sumOfMiddlePages = 0;
 
+    // Parse input and organise ordering rules
     const splitInput = input.split(/\r?\n\r?\n/);
 
     const ruleStrings = splitInput[0].split(/\r?\n/);
@@ -24,14 +25,18 @@ function solvePuzzle(input: string): number
         return { before, after };
     });
 
+    // Iterate through updates
     for (const updateString of updateStrings)
     {
         const pageNumbers = updateString.split(",").map(Number);
 
         if (isOrderIncorrect(pageNumbers, orderingRules))
         {
-            const middlePageIndex = (pageNumbers.length - 1) / 2;
-            sumOfMiddlePages += pageNumbers[middlePageIndex];
+            console.log(updateString, "incorrect");
+            
+            repairUpdate(pageNumbers, orderingRules);
+           // const middlePageIndex = (pageNumbers.length - 1) / 2;
+           // sumOfMiddlePages += pageNumbers[middlePageIndex];
         }
     }
 
@@ -61,6 +66,11 @@ function isOrderIncorrect(pageNumbers: number[], orderingRules: OrderingRule[]):
     }
 
     return false;
+}
+
+function repairUpdate(pageNumbers: number[], orderingRules: OrderingRule[])
+{
+    // WORK OUT THE ALGORITHM ON PAPER
 }
 
 function swapPages(update: number[], pageA: number, pageB: number)
