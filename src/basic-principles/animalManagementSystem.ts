@@ -38,11 +38,6 @@ class Animal
 
 class Cat extends Animal
 {
-    constructor(characteristics: AnimalCharacteristics)
-    {
-        super(characteristics);
-    }
-
     miaow()
     {
         console.log(`MIAOW, says ${this.name}`);
@@ -51,12 +46,6 @@ class Cat extends Animal
 
 class Dog extends Animal
 {
-
-    constructor(characteristics: AnimalCharacteristics)
-    {
-        super(characteristics);
-    }
-
     bark()
     {
         console.log(`WOOF WOOF, says ${this.name}`);
