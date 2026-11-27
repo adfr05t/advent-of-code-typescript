@@ -1,6 +1,7 @@
 {
   "name": "advent-of-code-typescript",
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js"
@@ -9,5 +10,8 @@
     "@types/node": "^26.0.1",
     "tsx": "^4.23.1",
     "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "cheerio": "^1.2.0"
   }
 }
